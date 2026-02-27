@@ -20,7 +20,7 @@ class ProjectResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'tech_stack' => $this->tech_stack,
-            // 'category' => $this->category->name,
+            'category' => $this->category->name,
             'github_url' => $this->github_url,
             'live_url' => $this->live_url,
             'created_at' => $this->created_at

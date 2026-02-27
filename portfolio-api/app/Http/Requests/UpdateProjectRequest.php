@@ -26,6 +26,8 @@ class UpdateProjectRequest extends FormRequest
 
             'description' => 'sometimes|required|string|min:10',
 
+            'category_id' => 'sometimes|required|exists:categories,id',
+
             'tech_stack' => 'nullable|array',
             'tech_stack.*' => 'string|max:50',
 
