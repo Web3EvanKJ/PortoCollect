@@ -103,7 +103,7 @@ composer install
 
 **3️⃣ Setup environment file**
 
-In `env.example`
+In `env.example` set the db, and FRONTEND_URL
 
 > Update database credentials inside `.env`.
 

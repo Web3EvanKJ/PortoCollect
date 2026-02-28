@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router";
+import { useParams } from "react-router";
 import api from "../../api/axios";
-import { Github, ExternalLink, Tag, ArrowLeft, Calendar } from "lucide-react";
+import { Github, ExternalLink, Tag, Calendar } from "lucide-react";
 
 export default function ProjectDetail() {
   const { slug } = useParams();
