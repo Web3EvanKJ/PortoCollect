@@ -65,4 +65,15 @@ class ProjectController extends Controller
 
         return response()->json(['message' => 'Deleted']);
     }
+
+    public function myProjects(Request $request)
+    {
+        $projects = $request->user()
+            ->projects()
+            ->with('category')
+            ->latest()
+            ->paginate(10);
+
+        return ProjectResource::collection($projects);
+    }
 }
