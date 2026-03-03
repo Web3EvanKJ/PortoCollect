@@ -25,10 +25,7 @@ export function ConfirmModal({
       />
 
       {/* Modal */}
-      <div
-        className="relative bg-white rounded-[20px] w-full max-w-[400px] p-7 border border-black/[0.07]"
-        style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.15)" }}
-      >
+      <div className="relative bg-white rounded-[20px] w-full max-w-[400px] p-7 border border-black/[0.07] shadow-sm">
         {/* Close */}
         <button
           onClick={onCancel}
@@ -53,8 +50,7 @@ export function ConfirmModal({
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 py-2.5 rounded-xl bg-[#F9140D] text-white text-sm font-semibold hover:bg-[#d90f0b] transition-all duration-150"
-            style={{ boxShadow: "0 4px 14px rgba(249,20,13,0.25)" }}
+            className="flex-1 py-2.5 rounded-xl bg-[#F9140D] text-white text-sm font-semibold hover:bg-[#d90f0b] transition-all duration-150 shadow-sm"
           >
             Delete
           </button>

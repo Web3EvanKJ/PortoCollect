@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import api from "../../api/axios";
 import { Mail, Lock, ArrowRight, AlertCircle } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function Login() {
   );
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
   const validate = () => {
     const newErrors: { email?: string; password?: string } = {};
@@ -46,7 +48,7 @@ export default function Login() {
 
     try {
       const res = await api.post("/login", { email, password });
-      localStorage.setItem("token", res.data.token);
+      login(res.data.token);
       navigate("/admin/projects");
     } catch (err: any) {
       setServerError("Invalid email or password. Please try again.");

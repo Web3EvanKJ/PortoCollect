@@ -1,27 +1,26 @@
-import { useEffect, useState } from "react";
-import api from "../../api/axios";
 import { Link } from "react-router";
 import { ExternalLink, Github, ArrowRight, Layers, Tag } from "lucide-react";
+import { useProjects } from "../../hooks/useProjects";
 
 export default function Projects() {
-  const [projects, setProjects] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: projects = [], isLoading, isError } = useProjects();
 
-  useEffect(() => {
-    api
-      .get("/projects")
-      .then((res) => {
-        setProjects(res.data.data);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-[#fafafa] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-8 h-8 rounded-full border-2 border-[#F9140D]/20 border-t-[#F9140D] animate-spin" />
           <span className="text-sm text-[#80809a]">Loading projects...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-[#fafafa] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-red-500">Failed to load projects.</p>
         </div>
       </div>
     );
@@ -97,7 +96,7 @@ export default function Projects() {
                 </p>
 
                 {/* Tech stack */}
-                {project.tech_stack?.length > 0 && (
+                {project.tech_stack && project.tech_stack.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-5">
                     {project.tech_stack.map((tech: string) => (
                       <span

@@ -11,29 +11,43 @@ import CreateProject from "./pages/admin/CreateProject.tsx";
 import EditProject from "./pages/admin/EditProject.tsx";
 import Projects from "./pages/public/Projects.tsx";
 import AppLayout from "./components/layouts/AppLayout.tsx";
+import { AuthProvider } from "./context/AuthContext.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppLayout />}>
-          {/* Public Routes */}
-          <Route path="/" element={<App />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:slug" element={<ProjectDetail />} />
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<AppLayout />}>
+              {/* Public Routes */}
+              <Route path="/" element={<App />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/projects/:slug" element={<ProjectDetail />} />
 
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<Login />} />
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<Login />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/admin/projects" element={<AdminProjects />} />
-            <Route path="/admin/projects/create" element={<CreateProject />} />
-            <Route path="/admin/projects/:id/edit" element={<EditProject />} />
-          </Route>
+              <Route element={<ProtectedRoute />}>
+                <Route path="/admin/projects" element={<AdminProjects />} />
+                <Route
+                  path="/admin/projects/create"
+                  element={<CreateProject />}
+                />
+                <Route
+                  path="/admin/projects/:id/edit"
+                  element={<EditProject />}
+                />
+              </Route>
 
-          <Route path="*" element={<div>Not Found</div>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+              <Route path="*" element={<div>Not Found</div>} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
 );

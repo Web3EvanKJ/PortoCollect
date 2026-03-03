@@ -3,39 +3,29 @@ import { Link, useNavigate } from "react-router";
 import api from "../../api/axios";
 import { Layers, Plus, Pencil, Trash2, Tag } from "lucide-react";
 import { ConfirmModal } from "../../components/fragments/ConfirmModal";
+import { useAuth } from "../../context/AuthContext";
+import { useMyProjects } from "../../hooks/useMyProjects";
 
 //  Main Page
 export default function AdminProjects() {
-  const [projects, setProjects] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState<{ open: boolean; slug: string | null }>({
     open: false,
     slug: null,
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: projects = [], isLoading, refetch } = useMyProjects();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+  const { logout, isLoggedIn } = useAuth();
 
-  const logout = async () => {
+  const handleLogout = async () => {
     try {
       await api.post("/logout");
     } catch (err) {
-      // ignore error (in case token expired)
+      // ignore if expired
     }
 
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
+    logout();
     navigate("/admin/login");
-  };
-  const fetchProjects = async () => {
-    setLoading(true);
-    const res = await api.get("/my-projects");
-    setProjects(res.data.data);
-    setLoading(false);
   };
 
   const handleDeleteRequest = (slug: string) => {
@@ -46,7 +36,7 @@ export default function AdminProjects() {
     if (!modal.slug) return;
     await api.delete(`/admin/projects/${modal.slug}`);
     setModal({ open: false, slug: null });
-    fetchProjects();
+    refetch();
   };
 
   const handleDeleteCancel = () => {
@@ -54,7 +44,7 @@ export default function AdminProjects() {
   };
 
   useEffect(() => {
-    fetchProjects();
+    refetch();
   }, []);
 
   console.log(projects);
@@ -92,7 +82,7 @@ export default function AdminProjects() {
             </Link>
             {isLoggedIn && (
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="flex items-center gap-2 bg-[#000000] text-white px-5 py-2.5 rounded-[10px] text-sm font-semibold no-underline hover:bg-[#333333] hover:-translate-y-px transition-all duration-200 shadow-md"
               >
                 Logout
@@ -102,10 +92,7 @@ export default function AdminProjects() {
         </div>
 
         {/* Table card */}
-        <div
-          className="bg-white border border-black/[0.07] rounded-[20px] overflow-hidden"
-          style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.05)" }}
-        >
+        <div className="bg-white border border-black/[0.07] rounded-[20px] overflow-hidden shadow-sm">
           {/* Table header */}
           <div className="grid grid-cols-[2fr_160px_140px_180px] gap-4 px-7 py-3.5 border-b border-black/[0.06] bg-[#f8f8fb]">
             <span className="text-[0.7rem] font-semibold tracking-[0.08em] uppercase text-[#a0a0b8]">
@@ -122,7 +109,7 @@ export default function AdminProjects() {
             </span>
           </div>
 
-          {loading ? (
+          {isLoading ? (
             <div className="flex items-center justify-center py-20 gap-3">
               <div className="w-5 h-5 rounded-full border-2 border-[#F9140D]/20 border-t-[#F9140D] animate-spin" />
               <span className="text-sm text-[#80809a]">Loading...</span>

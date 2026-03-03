@@ -1,19 +1,18 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
-import api from "../../api/axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Loader2 } from "lucide-react";
 import { Field } from "../../components/fragments/Field";
 import CategorySelect from "../../components/fragments/CategorySelect";
+import { useCreateProject } from "../../hooks/useCreateProject";
 
 const inputWithIcon =
   "w-full bg-[#f5f5f8] border border-black/[0.07] rounded-xl pl-4 pr-4 py-3 text-sm text-[#0a0a0f] placeholder-[#a0a0b8] focus:outline-none focus:border-[#F9140D]/40 focus:bg-white focus:ring-2 focus:ring-[#F9140D]/10 transition-all duration-150";
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// ─── Main Page
 export default function CreateProject() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const { mutateAsync, isPending } = useCreateProject();
 
   const formik = useFormik({
     initialValues: {
@@ -36,14 +35,7 @@ export default function CreateProject() {
       tech_stack: Yup.string(),
     }),
     onSubmit: async (values) => {
-      setLoading(true);
-      await api.post("/admin/projects", {
-        ...values,
-        tech_stack: values.tech_stack
-          ? values.tech_stack.split(",").map((t) => t.trim())
-          : [],
-      });
-      setLoading(false);
+      await mutateAsync(values);
       navigate("/admin/projects");
     },
   });
@@ -63,10 +55,7 @@ export default function CreateProject() {
 
         {/* Form card */}
         <form onSubmit={formik.handleSubmit}>
-          <div
-            className="bg-white border border-black/[0.07] rounded-[22px] p-8 mb-4"
-            style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.05)" }}
-          >
+          <div className="bg-white border border-black/[0.07] rounded-[22px] p-8 mb-4">
             <div className="flex flex-col gap-5">
               {/* Title */}
               <Field
@@ -161,7 +150,6 @@ export default function CreateProject() {
           {/* Publish toggle card */}
           {/* <div
             className="bg-white border border-black/[0.07] rounded-[22px] p-6 mb-6 flex items-center justify-between"
-            style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.05)" }}
           >
             <div>
               <p className="font-semibold text-sm text-[#0a0a0f]">
@@ -194,11 +182,10 @@ export default function CreateProject() {
           {/* Submit */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={isPending}
             className="w-full inline-flex items-center justify-center gap-2 bg-[#F9140D] text-white py-3.5 rounded-xl text-sm font-semibold hover:bg-[#d90f0b] hover:-translate-y-px active:translate-y-0 transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-            style={{ boxShadow: "0 4px 14px rgba(249,20,13,0.25)" }}
           >
-            {loading ? (
+            {isPending ? (
               <>
                 <Loader2 size={15} strokeWidth={2} className="animate-spin" />
                 Saving...

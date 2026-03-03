@@ -1,16 +1,13 @@
 import { Layers, Menu, X } from "lucide-react";
 import { Link } from "react-router";
 import { fontLanding } from "../../utils/fontLanding";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+  const { isLoggedIn } = useAuth();
 
   const closeMenu = () => setIsOpen(false);
 

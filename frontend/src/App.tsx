@@ -88,12 +88,7 @@ export default function App() {
           </h3>
         </div>
 
-        <div
-          className="grid gap-[18px]"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-          }}
-        >
+        <div className="grid gap-[18px] [grid-template-columns:repeat(auto-fit,minmax(290px,1fr))]">
           {[
             {
               icon: <LayoutGrid size={20} color="#F9140D" strokeWidth={1.8} />,
