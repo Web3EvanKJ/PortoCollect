@@ -15,7 +15,7 @@ import { AuthProvider } from "./context/AuthContext.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SignUp from "./pages/admin/SignUp.tsx";
 import VerifyOtp from "./pages/admin/VerifyOtp.tsx";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 

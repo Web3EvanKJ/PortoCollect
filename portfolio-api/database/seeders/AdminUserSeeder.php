@@ -19,10 +19,27 @@ class AdminUserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
+            'email_verified_at' => '2020-01-01'
         ]);
-        Category::create([
-            'name' => 'Groceries',
-            'slug' => 'groceries',
-        ]);
+        Category::insert(
+            [
+                [
+                    'name' => 'Company Profile',
+                    'slug' => 'company-profile',
+                ],
+                [
+                    'name' => 'Personal Website',
+                    'slug' => 'personal-website',
+                ],
+                [
+                    'name' => 'Software As A Service',
+                    'slug' => 'software-as-a-service',
+                ],
+                [
+                    'name' => 'Others',
+                    'slug' => 'others',
+                ],
+            ]
+        );
     }
 }

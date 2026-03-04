@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import api from "../../api/axios";
-import { Mail, Lock, ArrowRight, AlertCircle } from "lucide-react";
+import { Mail, ArrowRight, AlertCircle } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import PasswordInput from "../../components/ui/PasswordInput";
 

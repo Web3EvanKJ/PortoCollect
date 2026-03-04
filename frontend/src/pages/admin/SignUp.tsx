@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import api from "../../api/axios";
-import { AlertCircle, Mail, Lock, User, ArrowRight } from "lucide-react";
+import { AlertCircle, Mail, User, ArrowRight } from "lucide-react";
 import PasswordInput from "../../components/ui/PasswordInput";
 
 export default function SignUp() {
