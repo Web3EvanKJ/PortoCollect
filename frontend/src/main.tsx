@@ -13,6 +13,9 @@ import Projects from "./pages/public/Projects.tsx";
 import AppLayout from "./components/layouts/AppLayout.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import SignUp from "./pages/admin/SignUp.tsx";
+import VerifyOtp from "./pages/admin/VerifyOtp.tsx";
+import toast, { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -28,9 +31,11 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/projects" element={<Projects />} />
               <Route path="/projects/:slug" element={<ProjectDetail />} />
 
-              {/* Admin Routes */}
-              <Route path="/admin/login" element={<Login />} />
+              <Route path="/auth/login" element={<Login />} />
+              <Route path="/auth/sign-up" element={<SignUp />} />
+              <Route path="/auth/verify-otp" element={<VerifyOtp />} />
 
+              {/* Admin Routes */}
               <Route element={<ProtectedRoute />}>
                 <Route path="/admin/projects" element={<AdminProjects />} />
                 <Route
@@ -47,6 +52,7 @@ createRoot(document.getElementById("root")!).render(
             </Route>
           </Routes>
         </BrowserRouter>
+        <Toaster position="top-center" reverseOrder={false} />
       </AuthProvider>
     </QueryClientProvider>
   </StrictMode>,

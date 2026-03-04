@@ -44,7 +44,7 @@ function Navbar() {
             </Link>
           ) : (
             <Link
-              to="/admin/login"
+              to="/auth/login"
               className="inline-flex items-center gap-2 border border-[#F9140D]/50 text-[#F9140D] px-7 py-[11px] rounded-[10px] text-sm font-bold no-underline hover:border-[#F9140D] hover:bg-[#F9140D]/[0.05] transition-all duration-200"
             >
               Login
@@ -83,7 +83,7 @@ function Navbar() {
             </Link>
           ) : (
             <Link
-              to="/admin/login"
+              to="/auth/login"
               onClick={closeMenu}
               className="inline-flex justify-center border border-[#F9140D]/50 text-[#F9140D] px-5 py-3 rounded-lg text-sm font-bold"
             >

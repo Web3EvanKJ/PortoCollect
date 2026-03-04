@@ -25,7 +25,7 @@ export default function AdminProjects() {
     }
 
     logout();
-    navigate("/admin/login");
+    navigate("/auth/login");
   };
 
   const handleDeleteRequest = (slug: string) => {
