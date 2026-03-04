@@ -64,7 +64,8 @@ export default function SignUp() {
     try {
       await api.post("/register", { name, email, password });
 
-      navigate("/auth/verify-otp", { state: { email } });
+      // navigate("/auth/verify-otp", { state: { email } });
+      navigate("/auth/login");
     } catch (err: any) {
       // Handle Laravel validation errors (422)
       if (err.response?.status === 422) {

@@ -25,11 +25,11 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
-        if (!$request->user()->email_verified_at) {
-            return response()->json([
-                'message' => 'Email not verified'
-            ], 403);
-        }
+        // if (!$request->user()->email_verified_at) {
+        //     return response()->json([
+        //         'message' => 'Email not verified'
+        //     ], 403);
+        // }
 
         $token = $request->user()->createToken('api-token')->plainTextToken;
 
@@ -56,15 +56,15 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $otp = rand(100000, 999999);
+        // $otp = rand(100000, 999999);
 
-        EmailOtp::create([
-            'email' => $user->email,
-            'otp' => $otp,
-            'expires_at' => Carbon::now()->addMinutes(10)
-        ]);
+        // EmailOtp::create([
+        //     'email' => $user->email,
+        //     'otp' => $otp,
+        //     'expires_at' => Carbon::now()->addMinutes(10)
+        // ]);
 
-        Mail::to($user->email)->send(new SendOtpMail($otp));
+        // Mail::to($user->email)->send(new SendOtpMail($otp));
 
         return response()->json([
             'message' => 'OTP sent to email'
