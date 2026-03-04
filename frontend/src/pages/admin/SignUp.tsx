@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router";
 import api from "../../api/axios";
 import { AlertCircle, Mail, User, ArrowRight } from "lucide-react";
 import PasswordInput from "../../components/ui/PasswordInput";
+import toast from "react-hot-toast";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ export default function SignUp() {
 
       // navigate("/auth/verify-otp", { state: { email } });
       navigate("/auth/login");
+      toast.success("Account Created Successfully")
     } catch (err: any) {
       // Handle Laravel validation errors (422)
       if (err.response?.status === 422) {
